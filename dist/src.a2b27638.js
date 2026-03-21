@@ -248,6 +248,31 @@ function loadDefaultCityWeather(defaultCity) {
     console.error("Failed to fetch weather data:", error);
   });
 }
+function loadWeatherByCoords(lat, lon) {
+  var apiKey = "10b545o25teaa28dd38fd076fc778f2c";
+  var apiUrl = "https://api.shecodes.io/weather/v1/current?lon=".concat(lon, "&lat=").concat(lat, "&key=").concat(apiKey, "&units=metric");
+  axios.get(apiUrl).then(function (response) {
+    displayWeather(response);
+    getForecast(response.data.city);
+  }).catch(function (error) {
+    console.error("Failed to fetch weather by location:", error);
+    loadDefaultCityWeather("Munich");
+    getForecast("Munich");
+  });
+}
+function loadCurrentLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function (position) {
+      loadWeatherByCoords(position.coords.latitude, position.coords.longitude);
+    }, function () {
+      loadDefaultCityWeather("Munich");
+      getForecast("Munich");
+    });
+  } else {
+    loadDefaultCityWeather("Munich");
+    getForecast("Munich");
+  }
+}
 function formatShortDate(time) {
   var date = new Date(time * 1000);
   var shortDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -275,8 +300,7 @@ function displayForecast(response) {
   var forecastElement = document.querySelector("#forecast");
   forecastElement.innerHTML = forecastHtml;
 }
-loadDefaultCityWeather("Munich");
-getForecast("Munich");
+loadCurrentLocation();
 },{}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -302,7 +326,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "0.0.0.0" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38183" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37495" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

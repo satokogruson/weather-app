@@ -156,6 +156,36 @@ function loadDefaultCityWeather(defaultCity) {
   });
 }
 
+function loadWeatherByCoords(lat, lon) {
+  let apiKey = "10b545o25teaa28dd38fd076fc778f2c";
+  let apiUrl = `https://api.shecodes.io/weather/v1/current?lon=${lon}&lat=${lat}&key=${apiKey}&units=metric`;
+  axios.get(apiUrl).then(function(response) {
+    displayWeather(response);
+    getForecast(response.data.city);
+  }).catch(error => {
+    console.error("Failed to fetch weather by location:", error);
+    loadDefaultCityWeather("Munich");
+    getForecast("Munich");
+  });
+}
+
+function loadCurrentLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      function(position) {
+        loadWeatherByCoords(position.coords.latitude, position.coords.longitude);
+      },
+      function() {
+        loadDefaultCityWeather("Munich");
+        getForecast("Munich");
+      }
+    );
+  } else {
+    loadDefaultCityWeather("Munich");
+    getForecast("Munich");
+  }
+}
+
 
 function formatShortDate(time) {
   let date = new Date(time * 1000);
@@ -207,5 +237,4 @@ function displayForecast(response) {
   forecastElement.innerHTML = forecastHtml;
 }
 
-loadDefaultCityWeather("Munich");
-getForecast("Munich");
+loadCurrentLocation();
