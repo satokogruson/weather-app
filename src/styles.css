@@ -309,6 +309,22 @@ footer p {
     min-height: 100vh;
   }
 
+  .row {
+    flex-wrap: wrap;
+  }
+
+  .col-10 {
+    flex: 1 1 100%;
+  }
+
+  .col-2 {
+    flex: 1 1 100%;
+  }
+
+  #search-button {
+    width: 100%;
+  }
+
   .current-city {
     font-size: 26px;
   }
