@@ -178,7 +178,8 @@ function loadCurrentLocation() {
       function() {
         loadDefaultCityWeather("Munich");
         getForecast("Munich");
-      }
+      },
+      { timeout: 5000 }
     );
   } else {
     loadDefaultCityWeather("Munich");

@@ -267,6 +267,8 @@ function loadCurrentLocation() {
     }, function () {
       loadDefaultCityWeather("Munich");
       getForecast("Munich");
+    }, {
+      timeout: 5000
     });
   } else {
     loadDefaultCityWeather("Munich");
@@ -326,7 +328,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "0.0.0.0" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37495" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37951" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
